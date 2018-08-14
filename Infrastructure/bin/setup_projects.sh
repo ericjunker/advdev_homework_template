@@ -29,4 +29,6 @@ oc annotate namespace ${GUID}-parks-prod openshift.io/requester=${USER} --overwr
 
 #Put the actual GUID into the nexus_settings file
 ls ../../
+ls ../
+ls
 sed -i -e 's/GUID/$GUID/g' ../../nexus_settings.xml
