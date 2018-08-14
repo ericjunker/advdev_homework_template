@@ -31,4 +31,4 @@ oc annotate namespace ${GUID}-parks-prod openshift.io/requester=${USER} --overwr
 ls ../../
 ls ../
 ls
-sed -i -e 's/GUID/$GUID/g' ../../nexus_settings.xml
+sed -i -e 's/GUID/$GUID/g' nexus_settings.xml
