@@ -78,6 +78,6 @@ rm setup_nexus3.sh
 oc expose dc nexus3 --port=5000 --name=nexus-registry -n $GUID-nexus
 oc create route edge nexus-registry --service=nexus-registry --port=5000 -n $GUID-nexus
 
-#annotate the routes
-oc annotate route nexus3 console.alpha.openshift.io/overview-app-route=true -n $GUID-nexus
-oc annotate route nexus-registry console.alpha.openshift.io/overview-app-route=false -n $GUID-nexus
+#annotate the routes- not possible in 3.9
+#oc annotate route nexus3 console.alpha.openshift.io/overview-app-route=true -n $GUID-nexus
+#oc annotate route nexus-registry console.alpha.openshift.io/overview-app-route=false -n $GUID-nexus
