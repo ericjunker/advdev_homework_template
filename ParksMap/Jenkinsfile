@@ -20,7 +20,13 @@ podTemplate(
     // You need to build the application in directory `ParksMap`.
     // Also copy "../nexus_settings.xml" to your build directory
     // and replace 'GUID' in the file with your ${GUID} to point to >your< Nexus instance
-
+    stage("Build application"){
+      //copy over nexus settings
+      sh "cp ../nexys_settings.xml ."
+      //GUID replacement should be done in setup_projects.sh
+      //do the build
+      sh "mvn -s ../nexus_settings.xml clean package spring-boot:repackage -DskipTests -Dcom.redhat.xpaas.repo.redhatga"
+    }
   }
 }
 

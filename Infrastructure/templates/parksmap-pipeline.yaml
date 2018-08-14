@@ -10,7 +10,7 @@ items:
       git:
         uri: "https://github.com/ericjunker/advdev_homework_template"
         ref: "master"
-      contextDir: "ParksMap"
+      contextDir: "ParksMap/"
     strategy:
       type: "JenkinsPipeline"
       jenkinsPipelineStrategy:
