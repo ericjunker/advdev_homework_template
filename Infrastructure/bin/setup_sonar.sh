@@ -16,10 +16,12 @@ echo "Setting up Sonarqube in project $GUID-sonarqube"
 # To be Implemented by Student
 #set up PostgreSQL DB to back up Sonarqube
 # oc new-app --template=postgresql-persistent --param POSTGRESQL_USER=sonar --param POSTGRESQL_PASSWORD=sonar --param POSTGRESQL_DATABASE=sonar --param VOLUME_CAPACITY=4Gi --labels=app=sonarqube_db -n $GUID-sonar
-oc create -f Infrastructure/templates/sonar/db/project.yaml
+oc create -f Infrastructure/templates/sonar/postgresql.yaml -n $GUID-sonar
 
 #now set up Sonarqube itself
-oc new-app wkulhanek/sonarqube:6.7.4 --env=SONARQUBE_JDBC_USERNAME=sonar --env=SONARQUBE_JDBC_PASSWORD=sonar --env=SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql/sonar --labels=app=sonarqube -n $GUID-sonar
+# oc new-app wkulhanek/sonarqube:6.7.4 --env=SONARQUBE_JDBC_USERNAME=sonar --env=SONARQUBE_JDBC_PASSWORD=sonar --env=SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql/sonar --labels=app=sonarqube -n $GUID-sonar
+
+oc create -f Infrastructure/templates/sonar/sonar.yaml -n $GUID-sonar
 
 #pause rollout for some patching
 oc rollout pause dc sonarqube -n $GUID-sonar
