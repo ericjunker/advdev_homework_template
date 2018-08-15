@@ -31,4 +31,12 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi -n $GUID-jenkins
 #build slave pod
 ping -c 1 docker-registry-default.apps.na39.example.opentlc.com
-ping -c 1 docker-registry.default.svc
+#install img, to make docker images
+curl -fSL "https://github.com/genuinetools/img/releases/download/v0.4.8/img-linux-amd64" -o "/usr/local/bin/img"
+chmod a+x "/usr/local/bin/img"
+echo "FROM docker.io/openshift/jenkins-slave-maven-centos7:v3.9
+USER root
+RUN yum -y install skopeo apb && \
+    yum clean all
+USER 1001" > Dockerfile
+docker build . -t docker-registry-default.apps.na39.example.opentlc.com/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
