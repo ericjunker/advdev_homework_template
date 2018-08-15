@@ -30,5 +30,5 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 #set Jenkins up
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi -n $GUID-jenkins
 #build slave pod
-nslookup docker-registry-default.apps.na39.example.opentlc.com
-nslookup docker-registry.default.svc
+ping -c 1 docker-registry-default.apps.na39.example.opentlc.com
+ping -c 1 docker-registry.default.svc
