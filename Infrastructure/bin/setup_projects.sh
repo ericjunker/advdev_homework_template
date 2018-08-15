@@ -20,6 +20,12 @@ oc policy add-role-to-user admin ${USER} -n ${GUID}-sonarqube
 oc policy add-role-to-user admin ${USER} -n ${GUID}-jenkins
 oc policy add-role-to-user admin ${USER} -n ${GUID}-parks-dev
 oc policy add-role-to-user admin ${USER} -n ${GUID}-parks-prod
+#make Jenkins an admin too
+oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n ${GUID}-nexus
+oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n ${GUID}-sonarqube
+oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n ${GUID}-jenkins
+oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n ${GUID}-parks-dev
+oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n ${GUID}-parks-prod
 
 oc annotate namespace ${GUID}-nexus      openshift.io/requester=${USER} --overwrite
 oc annotate namespace ${GUID}-sonarqube  openshift.io/requester=${USER} --overwrite
