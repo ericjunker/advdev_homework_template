@@ -1,0 +1,26 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Endpoints
+  metadata:
+    creationTimestamp: null
+    labels:
+      app: sonarqube_db
+      template: postgresql-persistent-template
+    name: postgresql
+  subsets:
+  - addresses:
+    - ip: 10.1.15.15
+      nodeName: node6.na39.internal
+      targetRef:
+        kind: Pod
+        name: postgresql-1-2hfkb
+        namespace: test-docker
+        resourceVersion: "40413881"
+        uid: 47722a2c-a0a4-11e8-9a19-0220bffb280e
+    ports:
+    - name: postgresql
+      port: 5432
+      protocol: TCP
+kind: List
+metadata: {}
