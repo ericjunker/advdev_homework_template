@@ -20,7 +20,7 @@ oc new-app --template=postgresql-persistent --param POSTGRESQL_USER=sonar --para
 #try to fix permission errors:
 oc policy add-role-to-user admin system:serviceaccount:gpte-jenkins:jenkins -n $GUID-sonar
 oc policy add-role-to-user system:image-puller system:serviceaccount:gpte-jenkins:jenkins -n $GUID-sonar
-
+oc policy add-role-to-user self-provisioner system:serviceaccount:gpte-jenkins:jenkins -n $GUID-sonar
 oc new-app wkulhanek/sonarqube:6.7.4 --env=SONARQUBE_JDBC_USERNAME=sonar --env=SONARQUBE_JDBC_PASSWORD=sonar --env=SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql/sonar --labels=app=sonarqube -n $GUID-sonar
 
 #pause rollout for some patching
