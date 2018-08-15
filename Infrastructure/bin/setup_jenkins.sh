@@ -39,4 +39,4 @@ USER root
 RUN yum -y install skopeo apb && \
     yum clean all
 USER 1001" > Dockerfile
-img build . -t docker-registry-default.apps.na39.example.opentlc.com/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
+./img build . -t docker-registry-default.apps.na39.example.opentlc.com/${GUID}-jenkins/jenkins-slave-maven-appdev:v3.9
