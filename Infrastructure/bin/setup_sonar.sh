@@ -18,7 +18,7 @@ echo "Setting up Sonarqube in project $GUID-sonarqube"
 # oc new-app --template=postgresql-persistent --param POSTGRESQL_USER=sonar --param POSTGRESQL_PASSWORD=sonar --param POSTGRESQL_DATABASE=sonar --param VOLUME_CAPACITY=4Gi --labels=app=sonarqube_db -n $GUID-sonar
 for template in ../templates/sonar/db; do 
   oc create -f $template
-end
+done
 
 #now set up Sonarqube itself
 oc new-app wkulhanek/sonarqube:6.7.4 --env=SONARQUBE_JDBC_USERNAME=sonar --env=SONARQUBE_JDBC_PASSWORD=sonar --env=SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql/sonar --labels=app=sonarqube -n $GUID-sonar
