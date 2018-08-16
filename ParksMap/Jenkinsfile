@@ -16,6 +16,10 @@ podTemplate(
   node('skopeo-pod') {
     echo "GUID: ${GUID}"
     echo "CLUSTER: ${CLUSTER}"
+    // Set the tag for the development image: version + build number
+    def devTag  = "0.0-0"
+    // Set the tag for the production image: version
+    def prodTag = "0.0"
 
     // Your Pipeline Code goes here. Make sure to use the ${GUID} and ${CLUSTER} parameters where appropriate
     // You need to build the application in directory `ParksMap`.
@@ -27,6 +31,19 @@ podTemplate(
       //GUID replacement should be done in setup_projects.sh
       //do the build
       sh "mvn -s ../nexus_settings.xml clean package spring-boot:repackage -DskipTests -Dcom.redhat.xpaas.repo.redhatga"
+    }
+    stage("Tests"){
+      //TBD
+    }
+    stage("Sonarqube"){
+      //TBD
+    }
+    stage("Nexus"){
+      //TBD
+    }
+    stage("Build Openshft image"){
+      sh "oc start-build parksmap --follow --from-file=./target/openshift-tasks.war -n ${GUID}-parks-devs"
+      openshiftTag alias: 'false', destStream: 'tasks', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: "{GUID}-parks-dev"srcStream: 'tasks', srcTag: 'latest', verbose: 'false'
     }
   }
 }
