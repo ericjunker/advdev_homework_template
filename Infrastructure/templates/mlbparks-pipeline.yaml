@@ -20,5 +20,7 @@ items:
         - name: CLUSTER
           value: ${CLUSTER}
         jenkinsfilePath: Jenkinsfile
+    postCommit: #call /ws/data/load/ endpoint to load data
+      script: "wget 127.0.0.1/ws/data/load/ > /dev/null"
 kind: List
 metadata: []
