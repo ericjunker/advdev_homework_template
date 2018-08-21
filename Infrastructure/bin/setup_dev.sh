@@ -18,3 +18,6 @@ oc create -f Infrastructure/templates/dev/mongo.yaml -n ${GUID}-parks-dev
 oc expose svc/mongodb -n ${GUID}-parks-dev
 #label the service so that apps can find it
 oc label service mongodb type=parksmap-backend -n ${GUID}-parks-dev
+
+#set up permissions for ParksMap
+oc policy add-role-to-user view --serviceaccount=default -n ${GUID}-parks-dev
