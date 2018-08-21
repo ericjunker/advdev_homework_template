@@ -13,3 +13,8 @@ oc delete project $GUID-sonarqube
 oc delete project $GUID-jenkins
 oc delete project $GUID-parks-dev
 oc delete project $GUID-parks-prod
+
+echo "waiting since projects do not delete instantly"
+sleep 60
+
+oc get projects
