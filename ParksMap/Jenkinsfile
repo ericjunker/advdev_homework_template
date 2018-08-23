@@ -90,6 +90,7 @@ podTemplate(
      sh 'oc patch route parks -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
   }
 }
+}
 
 // Convenience Functions to read variables from the pom.xml
 // Do not change anything below this line.
