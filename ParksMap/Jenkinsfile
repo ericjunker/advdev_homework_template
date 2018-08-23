@@ -16,7 +16,7 @@ podTemplate(
   node('skopeo-pod') {
     echo "GUID: ${GUID}"
     echo "CLUSTER: ${CLUSTER}"
-    echo "VERSION: ${version}"
+    echo "VERSION: ${POM_VERSION}"
     // Set the tag for the development image: version + build number
     def devTag  = "${version}-${BUILD_NUMBER}"
     // Set the tag for the production image: version
