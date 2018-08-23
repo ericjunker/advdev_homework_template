@@ -30,7 +30,7 @@ echo "Setting up Jenkins in project ${GUID}-jenkins from Git Repo ${REPO} for Cl
 #set Jenkins up
 oc new-app jenkins-persistent --param ENABLE_OAUTH=true --param MEMORY_LIMIT=2Gi --param VOLUME_CAPACITY=4Gi -n $GUID-jenkins
 #jenkins is hungry. give it some more CPU
-oc patch dc jenkins -p '{"spec":{"template":{"spec":{"containers":[{"name":"jenkins","resources":{"limits":{"cpu":"2"}}}] }}}}'
+oc patch dc jenkins -p '{"spec":{"template":{"spec":{"containers":[{"name":"jenkins","resources":{"limits":{"cpu":"2000m"}}}] }}}}'
 #create build configs
 oc create -f Infrastructure/templates/parksmap-pipeline.yaml -n $GUID-jenkins
 oc create -f Infrastructure/templates/nationalparks-pipeline.yaml -n $GUID-jenkins
