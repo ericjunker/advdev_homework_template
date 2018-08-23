@@ -27,6 +27,7 @@ podTemplate(
     // Also copy "../nexus_settings.xml" to your build directory
     // and replace 'GUID' in the file with your ${GUID} to point to >your< Nexus instance
     stage("Build application"){
+      echo "Building appliction"
       //copy over nexus settings
       sh "cp ../nexys_settings.xml ."
       //GUID replacement should be done in setup_projects.sh
@@ -43,11 +44,13 @@ podTemplate(
       //TBD
     }
     stage("Build Openshft image"){
+      echo "Building Openshift Image"
       sh "oc start-build parksmap --follow --from-file=./target/parksmap.war -n ${GUID}-parks-dev"
       openshiftTag alias: 'false', destStream: 'parksmap', destTag: devTag, destinationNamespace: '${GUID}-parks-dev', namespace: "${GUID}-parks-dev", srcStream: 'parksmap', srcTag: 'latest', verbose: 'false'
     }
     stage("Deploy to Dev"){
       //update deployment config
+      echo "Deploying to Dev"
       sh "oc set image dc/parksmap tasks=docker-registry.default.svc:5000/${GUID}-parks-dev/tasks:${devTag} -n ${GUID}-parks-dev"
       //actually deploy
       openshiftDeploy depCfg: 'parksmap', namespace: '${GUID}-parks-dev', verbose: 'false', waitTime: '', waitUnit: 'sec'
@@ -55,6 +58,7 @@ podTemplate(
        openshiftVerifyService namespace: '${GUID}-parks-dev', svcName: 'parksmap', verbose: 'false'
     }
     stage ("copy image to nexus, again"){
+      echo "Copying image to Nexus"
       sh "skopeo copy --src-tls-verify=false --dest-tls-verify=false --src-creds openshift:\$(oc whoami -t) --dest-creds admin:admin123 docker://docker-registry.default.svc.cluster.local:5000/${GUID}-parks-dev/parksmap:${devTag} docker://nexus-registry.${GUID}-nexus.svc.cluster.local:5000/parksmap:${devTag}"
       //tag image, TBH I'm still not sure what this does
       openshiftTag alias: 'false', destStream: 'parksmap', destTag: prodTag, destinationNamespace: '${GUID}-parks-dev', namespace: '${GUID}-parks-dev', srcStream: 'parksmap', srcTag: devTag, verbose: 'false'
