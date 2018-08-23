@@ -61,10 +61,10 @@ podTemplate(
     // Blue/Green Deployment into Production
     // -------------------------------------
     // Do not activate the new version yet.
-   def destApp   = "parks-green"
-   def activeApp = ""
+    def destApp   = "parks-green"
+    def activeApp = ""
 
-  stage('Blue/Green Production Deployment') {
+    stage('Blue/Green Production Deployment') {
     activeApp = sh(returnStdout: true, script: "oc get route tasks -n ${GUID}-parks-prod -o jsonpath='{ .spec.to.name }'").trim()
     if (activeApp == "tasks-green") {
       destApp = "tasks-blue"
@@ -84,12 +84,12 @@ podTemplate(
     openshiftDeploy depCfg: destApp, namespace: '${GUID}-parks-prod', verbose: 'false', waitTime: '', waitUnit: 'sec'
     openshiftVerifyDeployment depCfg: destApp, namespace: '${GUID}-parks-prod', replicaCount: '1', verbose: 'false', verifyReplicaCount: 'true', waitTime: '', waitUnit: 'sec'
     openshiftVerifyService namespace: '${GUID}-parks-prod', svcName: destApp, verbose: 'false'
-  }
-  stage("Switch to new version") {
+    }
+    stage("Switch to new version") {
      echo "Switching Production application to ${destApp}."
      sh 'oc patch route parks -n ${GUID}-parks-prod -p \'{"spec":{"to":{"name":"' + destApp + '"}}}\''
+    }
   }
-}
 }
 
 // Convenience Functions to read variables from the pom.xml
