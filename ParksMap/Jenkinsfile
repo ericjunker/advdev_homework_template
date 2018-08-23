@@ -17,9 +17,9 @@ podTemplate(
     echo "GUID: ${GUID}"
     echo "CLUSTER: ${CLUSTER}"
     // Set the tag for the development image: version + build number
-    def devTag  = "0.0-0"
+    def devTag  = "${version}-${BUILD_NUMBER}"
     // Set the tag for the production image: version
-    def prodTag = "0.0"
+    def prodTag = "${version}"
 
     // Your Pipeline Code goes here. Make sure to use the ${GUID} and ${CLUSTER} parameters where appropriate
     // You need to build the application in directory `ParksMap`.
